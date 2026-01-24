@@ -1,7 +1,8 @@
 package com.afsar.myFirstProject.repository;
 
 import com.afsar.myFirstProject.entity.JournalEntry;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface JournalEntryRepository extends MongoRepository<JournalEntry,String> {
+public interface JournalEntryRepository extends MongoRepository<JournalEntry, ObjectId> {
 }
