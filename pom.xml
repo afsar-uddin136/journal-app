@@ -12,7 +12,7 @@
 	<artifactId>journalApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>myFirstProject</name>
-	<description>First project project for Spring Boot</description>
+	<description>First project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
