@@ -23,8 +23,8 @@ public class JournalEntryService {
     private UserService userService;
 
     @Transactional
-    public void saveEntry(JournalEntry myEntry, String username){
-        try{
+    public void saveEntry(JournalEntry myEntry, String username) {
+        try {
             myEntry.setDate(LocalDateTime.now());
             User user = userService.findByUserName(username);
             JournalEntry saved = journalEntryRepository.save(myEntry);
@@ -32,35 +32,36 @@ public class JournalEntryService {
             userService.saveUser(user);
         } catch (Exception e) {
             System.out.println(e);
-            throw new RuntimeException("An error occurred while saving the entry.",e);
+            throw new RuntimeException("An error occurred while saving the entry.", e);
         }
 
     }
-    public void saveNewEntry(JournalEntry myEntry){
+
+    public void saveNewEntry(JournalEntry myEntry) {
         journalEntryRepository.save(myEntry);
     }
 
-    public List<JournalEntry> findAllJournalEntry(){
+    public List<JournalEntry> findAllJournalEntry() {
         return journalEntryRepository.findAll();
     }
 
-    public Optional<JournalEntry> findJournalEntryById(ObjectId id){
+    public Optional<JournalEntry> findJournalEntryById(ObjectId id) {
         return journalEntryRepository.findById(id);
     }
 
     @Transactional
-    public boolean deleteJournalEntryById(ObjectId id, String username){
+    public boolean deleteJournalEntryById(ObjectId id, String username) {
         boolean removed = false;
         try {
             User user = userService.findByUserName(username);
             removed = user.getJournalEntries().removeIf(x -> x.getId().equals(id));
-            if(removed){
+            if (removed) {
                 userService.saveUser(user);
                 journalEntryRepository.deleteById(id);
             }
         } catch (Exception e) {
             System.out.println(e);
-            throw new RuntimeException("An error occured while deleting the entry :"+ e);
+            throw new RuntimeException("An error occured while deleting the entry :" + e);
         }
         return removed;
     }
