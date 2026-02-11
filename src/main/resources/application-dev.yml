@@ -1,0 +1,18 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://afsar_uddin:afsar12345@cluster0.ks103p9.mongodb.net/journaldb?retryWrites=true&w=majority
+      database: journaldb
+      auto-index-creation: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /journal
+
+weather:
+  api:
+    key: c0ee3122a3fca59d1ae467367a7e6594
+
+
+

@@ -4,7 +4,10 @@ import com.afsar.myFirstProject.entity.JournalEntry;
 import com.afsar.myFirstProject.entity.User;
 import com.afsar.myFirstProject.repository.JournalEntryRepository;
 import com.afsar.myFirstProject.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,8 +19,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Component
+
 @Service
+@Slf4j
 public class UserService {
     @Autowired
     private UserRepository userRepository;
@@ -27,10 +31,22 @@ public class UserService {
     public void saveUser(User user){
         userRepository.save(user);
     }
-    public void saveNewUser(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Arrays.asList("USER"));
-        userRepository.save(user);
+
+    public boolean saveNewUser(User user){
+        try{
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList("USER"));
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            log.error("An error occurred");
+            log.info("An error occurred");
+            log.warn("An error occurred");
+            log.trace("An error occurred");
+            log.debug("An error occurred");
+            return false;
+        }
+
     }
     public void addNewAdmin(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));

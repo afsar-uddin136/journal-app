@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+
 @Service
 public class JournalEntryService {
     @Autowired

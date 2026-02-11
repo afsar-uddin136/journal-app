@@ -1,8 +1,10 @@
 package com.afsar.myFirstProject.controller;
 
+import com.afsar.myFirstProject.api_response.WeatherResponse;
 import com.afsar.myFirstProject.entity.User;
 import com.afsar.myFirstProject.repository.UserRepository;
 import com.afsar.myFirstProject.service.UserService;
+import com.afsar.myFirstProject.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private WeatherService weatherService;
 
     @PutMapping()
     public ResponseEntity<?> updateUser(@RequestBody User user){
@@ -40,5 +44,16 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         userRepository.deleteByUserName(authentication.getName());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> greeting(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WeatherResponse response = weatherService.getWeather("Dhaka");
+        String greeting =" ";
+        if(response != null){
+            greeting = ", weather feels like "+response.getCurrent().getFeelsLike();
+        }
+        return new ResponseEntity<>("Hi "+authentication.getName()+greeting,HttpStatus.OK);
     }
 }
